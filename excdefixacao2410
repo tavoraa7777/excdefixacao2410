@@ -1,0 +1,17 @@
+DECLARE v_autor_nome VARCHAR(255); DECLARE v_genero_nome VARCHAR(255); DECLARE cursor_relacionamento CURSOR FOR SELECT Livro.titulo, Autor.nome, Genero.nome FROM Livro JOIN Livro_Autor ON Livro.id = Livro_Autor.livro_id JOIN Autor ON Livro_Autor.autor_id = Autor.id JOIN Genero ON Livro.genero_id = Genero.id;  
+
+OPEN cursor_relacionamento;
+
+fetch_loop: LOOP
+
+FETCH cursor_relacionamento INTO v_titulo, v_autor_nome, v_genero_nome;
+
+IF done THEN
+
+LEAVE fetch_loop;
+
+END IF;
+
+SELECT CONCAT('Livro: ', v_titulo, ', Autor: ', v_autor_nome, ', Gênero: ', v_genero_nome) AS relacionamento; END LOOP fetch_loop;
+
+CLOSE cursor_relacionamento;
